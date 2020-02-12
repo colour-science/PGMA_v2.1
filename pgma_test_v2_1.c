@@ -9,6 +9,8 @@ in pgma_gbcalc_v2_1.c and pgma_gmas_v2_1.c
 
 See readme_pgma_v2_1.txt for details*/
 
+#include <stdio.h>
+#include <string.h>
 
 #include "pgma_v2_1.h"
 
@@ -20,9 +22,10 @@ struct LAB ogamut[SECTORS][SECTORS], rgamut[SECTORS][SECTORS], ogamutc[SECTORS][
 int main(void)
 {
 	char fname[512];
+	char line[128];
 	FILE *ofile;
 	FILE *rfile;
-	long int n,i,w,h,gma_i;
+	long int i,w,h,gma_i;
 	struct LAB otest,rtest;
 	unsigned char L,a,b;
 	double ominL,omaxL,rminL,rmaxL;
@@ -43,17 +46,18 @@ int main(void)
 	/*calculate original gamut boundary*/
 	printf("Enter original gamut data file name: ");
 	scanf("%s",fname);
-	printf("Enter number of colours: ");
-	scanf("%ld",&n);
 
 	ofile=fopen(fname,"r");
 
-	for(i=0;i<n;i++)
-		fscanf(ofile, "%lf %lf %lf", &gdata[0][i], &gdata[1][i], &gdata[2][i]);
+	i = 0;
+	while(fgets(line, sizeof line, ofile) != NULL){
+		sscanf(line, "%lf %lf %lf", &gdata[0][i], &gdata[1][i], &gdata[2][i]);
+		i++;
+	}
 
 	fclose(ofile);
 
-	calc_gb(gdata,n,ogamut);
+	calc_gb(gdata,i,ogamut);
 
 	savegamut(ogamut,"ogamut.sg");
 	/**/
@@ -61,17 +65,18 @@ int main(void)
 	/*calculate reproduction gamut boundary*/
 	printf("Enter reproduction gamut data file name: ");
 	scanf("%s",fname);
-	printf("Enter number of colours: ");
-	scanf("%ld",&n);
 
 	ofile=fopen(fname,"r");
 
-	for(i=0;i<n;i++)
-		fscanf(ofile, "%lf %lf %lf", &gdata[0][i], &gdata[1][i], &gdata[2][i]);
+	i = 0;
+	while(fgets(line, sizeof line, ofile) != NULL) {
+		sscanf(line, "%lf %lf %lf", &gdata[0][i], &gdata[1][i], &gdata[2][i]);
+		i++;
+	}
 
 	fclose(ofile);
 
-	calc_gb(gdata,n,rgamut);
+	calc_gb(gdata,i,rgamut);
 
 	savegamut(rgamut,"rgamut.sg");
 	/**/
