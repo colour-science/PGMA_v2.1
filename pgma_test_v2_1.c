@@ -17,7 +17,7 @@ void savegamut();
 double gdata[3][4500];
 struct LAB ogamut[SECTORS][SECTORS], rgamut[SECTORS][SECTORS], ogamutc[SECTORS][SECTORS];
 
-void main(void)
+int main(void)
 {
 	char fname[512];
 	FILE *ofile;
@@ -44,7 +44,7 @@ void main(void)
 	printf("Enter original gamut data file name: ");
 	scanf("%s",fname);
 	printf("Enter number of colours: ");
-	scanf("%d",&n);
+	scanf("%ld",&n);
 
 	ofile=fopen(fname,"r");
 
@@ -62,7 +62,7 @@ void main(void)
 	printf("Enter reproduction gamut data file name: ");
 	scanf("%s",fname);
 	printf("Enter number of colours: ");
-	scanf("%d",&n);
+	scanf("%ld",&n);
 
 	ofile=fopen(fname,"r");
 
@@ -80,9 +80,9 @@ void main(void)
 	printf("Enter original raw LAB image file name: ");
 	scanf("%s",fname);
 	printf("Enter width: ");
-	scanf("%d",&w);
+	scanf("%ld",&w);
 	printf("Enter height: ");
-	scanf("%d",&h);
+	scanf("%ld",&h);
 
 	ofile=fopen(fname,"rb");
 
@@ -97,7 +97,7 @@ void main(void)
 	printf("2   SGCK\n\n");
 
 	printf("Enter choice: ");
-	scanf("%d",&gma_i);
+	scanf("%ld",&gma_i);
 
 	if(gma_i==1)
 		init_hp_minde(rgamut,&rminL,&rmaxL);
@@ -107,8 +107,10 @@ void main(void)
 		scanf("%d",&m);
 		init_sgck(ogamut,rgamut,ogamutc,&ominL,&omaxL,&rminL,&rmaxL,S_lut,m);
 	}
-	else
+	else{
 		printf("Error!\n");
+		return -1;
+	}
 
 	for(i=0;i<(w*h);i++)
 	{
@@ -145,6 +147,7 @@ void main(void)
 	fclose(rfile);
 	/**/
 
+	return 0;
 }
 
 /*saves information in gamut boundary descriptor to a file*/
