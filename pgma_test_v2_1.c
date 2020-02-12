@@ -19,7 +19,7 @@ struct LAB ogamut[SECTORS][SECTORS], rgamut[SECTORS][SECTORS], ogamutc[SECTORS][
 
 void main(void)
 {
-	char fname[100];
+	char fname[512];
 	FILE *ofile;
 	FILE *rfile;
 	long int n,i,w,h,gma_i;
