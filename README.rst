@@ -14,5 +14,5 @@ About
 -----
 
 | **PGMA** by Ján Morovic
-| Copyright © 2001-2020 – Ján Morovic
+| Copyright 2001 – Ján Morovic
 | `https://github.com/colour-science/PGMA_v2.1 <https://github.com/colour-science/PGMA_v2.1>`__
